@@ -1,0 +1,30 @@
+<% if @user.errors.any? %>
+  <div>Couldn't save user:</div>
+  <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @user, local: true do |form| %>
+  <p>
+    <div><%= form.label :name, 'Choose a username' %></div>
+    <div><%= form.text_field :name %></div>
+  </p>
+
+  <p>
+    <div><%= form.label :password %></div>
+    <div><%= form.password_field :password %></div>
+  </p>
+
+  <p>
+    <div><%= form.label :password_confirmation, 'Confirm your password' %></div>
+    <div><%= form.password_field :password_confirmation %></div>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+

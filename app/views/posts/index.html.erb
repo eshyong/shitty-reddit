@@ -1,0 +1,23 @@
+<h2>Shitty Reddit</h2>
+
+<% if session[:logged_in] %>
+  <div>Welcome back, <%= session[:username] %></div>
+  <div><%= link_to 'Logout', logout_path %></div> 
+  <div><%= link_to 'Submit a link', new_post_path %></div>
+  <br>
+<% else %>
+  <div><%= link_to 'Create user', new_user_path %></div>
+  <div><%= link_to 'Login', user_path %></div>
+  <br>
+<% end %>
+
+<% @posts.each do |post| %>
+  <div>
+    <a href="<%= post.url %>"><%= post.title %></a>
+    <div>score: <%= post.upvotes - post.downvotes %></div>
+  </div>
+  <div>
+    <%= link_to 'view comments', post_path(post) %>
+  </div>
+  <br>
+<% end %>

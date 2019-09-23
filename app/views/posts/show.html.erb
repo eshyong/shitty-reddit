@@ -1,0 +1,27 @@
+<a href="<%= @post.url %>"><%= @post.title %></a>
+
+<%= form_with model: [ @post, Comment.new ], local: true do |form| %>
+  <p>
+    <div>user</div>
+    <%= form.text_field :user %>
+  </p>
+  <p>
+    <div>leave a comment</div>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<% if !flash[:errors].nil? && !flash[:errors].empty? %>
+  <div>Unable to save comment, errors:</div>
+  <% flash[:errors].each do |msg| %>
+    <div><%= msg %></div>
+  <% end %>
+<% end %>
+
+<h2>Comments</h2>
+<%= render(@post.comments) %>
+
+<%= link_to 'Back', posts_path %> 

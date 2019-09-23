@@ -1,0 +1,18 @@
+<div>Submit a new link</div>
+
+<%= form_with model: @post, local: true do |form| %>
+  <p>
+    <%= form.label :title, 'Choose a title' %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :url %><br>
+    <%= form.text_field :url %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
