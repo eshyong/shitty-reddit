@@ -1,4 +1,15 @@
-<a href="<%= @post.url %>"><%= @post.title %></a>
+<div>
+  <span style="float:left; margin-right:20px">
+    <%= upvote_button %>
+    <div><%= @post.upvotes - @post.downvotes %></div>
+    <%= downvote_button %>
+  </span>
+  <span>
+    <a href="<%= @post.url %>"><%= @post.title %></a>
+  </span>
+</div>
+<br>
+<br>
 
 <%= form_with model: [ @post, Comment.new ], local: true do |form| %>
   <p>
