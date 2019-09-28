@@ -32,18 +32,11 @@ class PostsController < ApplicationController
     @post.with_lock do
       # check if user has voted before
       if vote.nil?
-        vote = @post.votes.new(upvoted: true, user_id: user_id)
-      else
-        vote.upvoted = vote.upvoted ? false : true
-        vote.downvoted = false
+        vote = @post.votes.new(user_id: user_id)
       end
 
-      # if a user upvotes an already upvoted post, it is negated.
-      if vote.upvoted
-        @post.upvotes += 1
-      else
-        @post.upvotes -= 1
-      end
+      @post.upvote(vote)
+      vote.upvote
 
       @post.save!
       vote.save!
@@ -60,17 +53,10 @@ class PostsController < ApplicationController
       # check if user has voted before
       if vote.nil?
         vote = @post.votes.new(downvoted: true, user_id: user_id)
-      else
-        vote.downvoted = vote.downvoted ? false : true
-        vote.upvoted = false
       end
 
-      # if a user downvotes an already downvoted post, it is negated.
-      if vote.downvoted
-        @post.downvotes += 1
-      else
-        @post.downvotes -= 1
-      end
+      @post.downvote(vote)
+      vote.downvote
 
       @post.save!
       vote.save!
