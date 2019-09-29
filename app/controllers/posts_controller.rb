@@ -53,7 +53,7 @@ class PostsController < ApplicationController
     @post.with_lock do
       # check if user has voted before
       if vote.nil?
-        vote = @post.votes.new(downvoted: true, user_id: user_id)
+        vote = @post.votes.new(user_id: user_id)
       end
 
       @post.downvote(vote)
@@ -74,10 +74,6 @@ class PostsController < ApplicationController
 
   def post_id
     params[:id]
-  end
-
-  def user_id
-    return session[:user_id]
   end
 
   def post_params(_type)

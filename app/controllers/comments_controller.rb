@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
 
     comment.with_lock do
       if vote.nil?
-        vote = comment.votes.new(upvoted: true, user_id: user_id)
+        vote = comment.votes.new(user_id: user_id)
       end
 
       comment.upvote(vote)
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
 
     comment.with_lock do
       if vote.nil?
-        vote = comment.votes.new(downvoted: true, user_id: user_id)
+        vote = comment.votes.new(user_id: user_id)
       end
 
       comment.downvote(vote)
@@ -56,10 +56,6 @@ class CommentsController < ApplicationController
 
   def comment_id
     params[:id]
-  end
-
-  def user_id
-    session[:user_id]
   end
 
   def comment_params

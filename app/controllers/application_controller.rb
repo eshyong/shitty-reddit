@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
   def logged_out?
     session[:user_id].nil?
   end
+
+  def user_id
+    session[:user_id]
+  end
 end
