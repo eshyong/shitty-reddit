@@ -13,5 +13,11 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  post '/posts/:post_id/comments/:id/upvote',
+    to: 'comments#upvote', as: 'comment_upvote'
+
+  post '/posts/:post_id/comments/:id/downvote',
+    to: 'comments#downvote', as: 'comment_downvote'
+
   resources :users
 end

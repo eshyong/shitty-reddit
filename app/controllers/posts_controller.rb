@@ -10,8 +10,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    post_h = post_params.to_h.update(_type: :link)
-    @post = Post.new(post_h)
+    @post = Post.new(post_params(:link))
     @post.save
     redirect_to @post
   end
@@ -40,7 +39,6 @@ class PostsController < ApplicationController
 
       @post.upvote(vote)
       vote.upvote
-
       @post.save!
       vote.save!
     end
@@ -60,7 +58,6 @@ class PostsController < ApplicationController
 
       @post.downvote(vote)
       vote.downvote
-
       @post.save!
       vote.save!
     end
@@ -83,7 +80,9 @@ class PostsController < ApplicationController
     return session[:user_id]
   end
 
-  def post_params
-    params.require(:post).permit(:title, :url)
+  def post_params(_type)
+    permitted = params.require(:post).permit(:title, :url)
+    permitted[:_type] = _type
+    permitted
   end
 end

@@ -1,6 +1,8 @@
 <p>
   <span style="float:left; margin-right:20px">
+    <div><%= upvote_button(comment, comment_upvote_path(@post, comment)) %></div>
     <div><%= comment.upvotes - comment.downvotes %>
+    <div><%= downvote_button(comment, comment_downvote_path(@post, comment)) %></div>
   </span>
   <span>
     <div><%= comment.user %> says:</div>

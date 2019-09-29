@@ -37,4 +37,19 @@ class Post < ApplicationRecord
       self.downvotes += 1
     end
   end
+
+  def upvoted?(user_id)
+    vote = find_user_vote(user_id)
+    !vote.nil? && vote.upvoted
+  end
+
+  def downvoted?(user_id)
+    vote = find_user_vote(user_id)
+    !vote.nil? && vote.downvoted
+  end
+
+  private
+  def find_user_vote(user_id)
+    self.votes.find_by(user_id: user_id)
+  end
 end
