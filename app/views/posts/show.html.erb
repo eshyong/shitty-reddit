@@ -13,10 +13,6 @@
 
 <%= form_with model: [ @post, Comment.new ], local: true do |form| %>
   <p>
-    <div>user</div>
-    <%= form.text_field :user %>
-  </p>
-  <p>
     <div>leave a comment</div>
     <%= form.text_area :body %>
   </p>

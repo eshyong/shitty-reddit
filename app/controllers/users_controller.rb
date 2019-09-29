@@ -26,16 +26,16 @@ class UsersController < ApplicationController
     @user = User.find_by(name: user_params[:name])
     if @user.nil?
       flash[:notice] = 'No user found with that name, try creating a new user'
-      render 'user'
+      render 'user' and return
+    end
+
+    @user = @user.try(:authenticate, user_params[:password])
+    if @user
+      create_new_session
+      redirect_to(session[:redirect_to_path])
     else
-      @user = @user.try(:authenticate, user_params[:password])
-      if @user
-        create_new_session
-        redirect_to(posts_index_path)
-      else
-        flash[:notice] = 'Invalid password; please try again'
-        render 'user'
-      end
+      flash[:notice] = 'Invalid password; please try again'
+      render 'user'
     end
   end
 

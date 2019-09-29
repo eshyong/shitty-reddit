@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :require_login, except: [:index, :show]
+
   def index
     @posts = Post.all()
   end
@@ -8,7 +10,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    post_h = post_params.to_h.update(_type: :link, upvotes: 0, downvotes: 0)
+    post_h = post_params.to_h.update(_type: :link)
     @post = Post.new(post_h)
     @post.save
     redirect_to @post
@@ -20,9 +22,10 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(post_id)
     vote = find_vote_by_user(user_id)
-    return if vote.nil?
-    @upvoted = vote.upvoted
-    @downvoted = vote.downvoted
+    unless vote.nil?
+      @upvoted = vote.upvoted
+      @downvoted = vote.downvoted
+    end
   end
 
   def upvote
@@ -67,7 +70,7 @@ class PostsController < ApplicationController
 
   private 
   def find_vote_by_user(user_id)
-    if !user_id.nil?
+    if logged_in?
       @post.votes.find_by(user_id: user_id)
     end
   end

@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   post '/login', to: 'users#authenticate', as: 'login'
   get '/logout', to: 'users#logout'
 
-  post '/upvote', to: 'posts#upvote'
-  post '/downvote', to: 'posts#downvote'
+  post '/posts/:id/upvote', to: 'posts#upvote', as: 'post_upvote'
+  post 'posts/:id/downvote', to: 'posts#downvote', as: 'post_downvote'
 
   resources :posts do
     resources :comments

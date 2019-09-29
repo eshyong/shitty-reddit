@@ -1,10 +1,10 @@
 module PostsHelper
   def upvote_button
-    button_to('↑', upvote_path, html_options('upvote-button'))
+    button_to('↑', post_upvote_path, html_options('upvote-button'))
   end
 
   def downvote_button
-    button_to('↓', downvote_path, html_options('downvote-button'))
+    button_to('↓', post_downvote_path, html_options('downvote-button'))
   end
 
   def html_options(classname)

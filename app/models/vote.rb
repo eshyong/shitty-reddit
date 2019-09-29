@@ -1,3 +1,4 @@
+# Represents a vote cast by a user. Can apply to posts or comments.
 class Vote < ApplicationRecord
   belongs_to :voteable, polymorphic: true
   attribute :upvoted, :boolean, default: false

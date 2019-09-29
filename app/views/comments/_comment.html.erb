@@ -1,4 +1,9 @@
 <p>
-  <div><%= comment.user %> says:</div>
-  <div><%= comment.body %></div>
+  <span style="float:left; margin-right:20px">
+    <div><%= comment.upvotes - comment.downvotes %>
+  </span>
+  <span>
+    <div><%= comment.user %> says:</div>
+    <div><%= comment.body %></div>
+  </span>
 </p>
