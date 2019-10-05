@@ -5,7 +5,7 @@
 # Requires special upvote/downvote logic for canceling/replacing previous
 # votes.
 class Post < ApplicationRecord
-  include Voteable
+  include VoteableContent
 
   has_many :comments
   has_many :votes, as: :voteable

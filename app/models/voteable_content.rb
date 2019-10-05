@@ -1,10 +1,10 @@
-module Voteable
-  def upvote(vote)
-    if vote.downvoted
+module VoteableContent
+  def upvote(prev)
+    if prev.downvoted
       # need to also remove previous downvote
       self.downvotes -= 1
       self.upvotes += 1
-    elsif vote.upvoted
+    elsif prev.upvoted
       # if previously upvoted, negate it
       self.upvotes -= 1
     else
@@ -13,12 +13,12 @@ module Voteable
     end
   end
 
-  def downvote(vote)
-    if vote.upvoted
+  def downvote(prev)
+    if prev.upvoted
       # also need to remove previous upvote
       self.upvotes -= 1
       self.downvotes += 1
-    elsif vote.downvoted
+    elsif prev.downvoted
       # if previously downvoted, negate it
       self.downvotes -= 1
     else

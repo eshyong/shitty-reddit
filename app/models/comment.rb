@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  include Voteable
+  include VoteableContent
 
   belongs_to :post
   has_many :votes, as: :voteable
