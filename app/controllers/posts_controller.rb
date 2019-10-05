@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  include VoteableController
   before_action :require_login, except: [:index, :show]
 
   def index
@@ -29,39 +30,13 @@ class PostsController < ApplicationController
 
   def upvote
     @post = Post.find(post_id)
-    vote = find_vote_by_user(user_id)
-
-    @post.with_lock do
-      # check if user has voted before
-      if vote.nil?
-        vote = @post.votes.new(user_id: user_id)
-      end
-
-      @post.upvote(vote)
-      vote.upvote
-      @post.save!
-      vote.save!
-    end
-
+    up(@post)
     redirect_to @post
   end
 
   def downvote
     @post = Post.find(post_id)
-    vote = find_vote_by_user(user_id)
-
-    @post.with_lock do
-      # check if user has voted before
-      if vote.nil?
-        vote = @post.votes.new(user_id: user_id)
-      end
-
-      @post.downvote(vote)
-      vote.downvote
-      @post.save!
-      vote.save!
-    end
-
+    down(@post)
     redirect_to @post
   end
 

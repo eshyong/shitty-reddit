@@ -4,12 +4,12 @@ class Vote < ApplicationRecord
   attribute :upvoted, :boolean, default: false
   attribute :downvoted, :boolean, default: false
 
-  def upvote
+  def up
     self.upvoted = self.upvoted ? false : true
     self.downvoted = false
   end
 
-  def downvote
+  def down
     self.downvoted = self.downvoted ? false : true
     self.upvoted = false
   end

@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include VoteableController
   before_action :require_login
 
   def create
@@ -14,38 +15,14 @@ class CommentsController < ApplicationController
   def upvote
     post = Post.find(post_id)
     comment = post.comments.find(comment_id)
-    vote = comment.votes.find_by(user_id: user_id)
-
-    comment.with_lock do
-      if vote.nil?
-        vote = comment.votes.new(user_id: user_id)
-      end
-
-      comment.upvote(vote)
-      vote.upvote
-      comment.save!
-      vote.save!
-    end
-
+    up(comment)
     redirect_to post
   end
 
   def downvote
     post = Post.find(post_id)
     comment = post.comments.find(comment_id)
-    vote = comment.votes.find_by(user_id: user_id)
-
-    comment.with_lock do
-      if vote.nil?
-        vote = comment.votes.new(user_id: user_id)
-      end
-
-      comment.downvote(vote)
-      vote.downvote
-      comment.save!
-      vote.save!
-    end
-
+    down(comment)
     redirect_to post
   end
 

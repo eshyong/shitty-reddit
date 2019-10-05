@@ -1,5 +1,5 @@
 module VoteableContent
-  def upvote(prev)
+  def up(prev)
     if prev.downvoted
       # need to also remove previous downvote
       self.downvotes -= 1
@@ -13,7 +13,7 @@ module VoteableContent
     end
   end
 
-  def downvote(prev)
+  def down(prev)
     if prev.upvoted
       # also need to remove previous upvote
       self.upvotes -= 1
