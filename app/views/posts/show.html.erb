@@ -7,9 +7,12 @@
 
 <div>
   <span style="float:left; margin-right:20px">
-    <%= upvote_button(@post, post_upvote_path) %>
-    <div><%= @post.upvotes - @post.downvotes %></div>
-    <%= downvote_button(@post, post_downvote_path) %>
+    <%= render partial: "shared/vote_buttons",
+      locals: {
+      resource: @post,
+      upvote_path: post_upvote_path,
+      downvote_path: post_downvote_path
+    } %>
   </span>
   <span>
     <a href="<%= @post.url %>"><%= @post.title %></a>
@@ -18,7 +21,8 @@
 <br>
 <br>
 
-<%= render partial: "comments/form", locals: { parent_id: "" } %>
+<%= render partial: "comments/form",
+           locals: { parent_id: "", hidden: false } %>
 
 <% if !flash[:errors].nil? && !flash[:errors].empty? %>
   <div>Unable to save comment, errors:</div>

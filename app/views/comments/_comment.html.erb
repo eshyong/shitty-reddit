@@ -1,21 +1,20 @@
 <%# root node is depth 0 but has no comments, start margin at depth = 2 %>
 <div style="margin-bottom:20px; margin-left:<%= (depth - 1) * 20 %>px">
   <span style="float:left; margin-right:20px">
-    <div><%= upvote_button(comment, comment_upvote_path(@post, comment)) %></div>
-    <div><%= comment.upvotes - comment.downvotes %></div>
-    <div><%= downvote_button(comment, comment_downvote_path(@post, comment)) %></div>
+    <%= render partial: "shared/vote_buttons",
+      locals: {
+      resource: comment,
+      upvote_path: comment_upvote_path(@post, comment),
+      downvote_path: comment_downvote_path(@post, comment)
+    } %>
   </span>
   <span>
     <div><%= comment.user %> says:</div>
     <div><%= comment.body %></div>
   </span>
   <button onclick="showReplyForm(<%= comment.id %>)">reply</button>
-  <%= form_with model: [ @post, Comment.new ],
-                local: true,
-                id: "reply-form-#{comment.id}",
-                html: { style: "display: none;" } do |form| %>
-    <%= render partial: "comments/form", locals: { parent_id: comment.id } %>
-  <% end %>
+  <%= render partial: "comments/form",
+             locals: { parent_id: comment.id, hidden: true } %>
 </div>
 
 <%# recursively render children %>

@@ -1,4 +1,13 @@
-<%= form_with model: [ @post, Comment.new ], local: true do |form| %>
+<% if hidden %>
+  <% html_options = { style: "display: none;" } %>
+<% else %>
+  <% html_options = {} %>
+<% end %>
+
+<%= form_with model: [ @post, Comment.new ],
+              local: true,
+              id: "reply-form-#{parent_id}",
+              html: html_options do |form| %>
   <p>
     <%= form.text_area :body %>
     <input type="hidden" name="comment[parent_id]" value="<%= parent_id %>">
