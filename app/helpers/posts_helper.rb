@@ -1,28 +1,31 @@
 module PostsHelper
   def upvote_button(resource, path)
     is_upvoted = resource.upvoted?(user_id)
-    options = html_options("upvote-button", is_upvoted, false)
-    button_to("↑", path, options)
+    html_options = {
+      params: { id: resource.id },
+      class: button_classname("upvote-button", is_upvoted: is_upvoted)
+    }
+    button_to("↑", path, html_options)
   end
 
   def downvote_button(resource, path)
     is_downvoted = resource.downvoted?(user_id)
-    options = html_options("downvote-button", false, is_downvoted)
-    button_to("↓", path, options)
+    html_options = {
+      params: { id: resource.id },
+      class: button_classname("downvote-button", is_downvoted: is_downvoted)
+    }
+    button_to("↓", path, html_options)
   end
 
   private
-  def html_options(classname, is_upvoted, is_downvoted)
-    html_options = { params: { id: @post.id } }
-
+  def button_classname(classname, is_upvoted: false, is_downvoted: false)
     if is_upvoted && classname == "upvote-button"
-      classname = "#{classname} upvoted"
+      "#{classname} upvoted"
     elsif is_downvoted && classname == "downvote-button"
-      classname = "#{classname} downvoted"
+      "#{classname} downvoted"
+    else
+      classname
     end
-
-    html_options[:class] = classname
-    html_options
   end
 
   def user_id
