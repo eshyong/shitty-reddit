@@ -1,0 +1,10 @@
+<% @comments_tree.children.each do |child| %>
+  <%=
+    render partial: "comments/comment",
+      locals: {
+        depth: child.depth,
+        comment: child.comment,
+        children: child.children
+      }
+  %>
+<% end %>

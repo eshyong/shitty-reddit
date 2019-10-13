@@ -21,11 +21,16 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(post_id)
+
+    # get user vote
     vote = find_vote_by_user(user_id)
     unless vote.nil?
       @upvoted = vote.upvoted
       @downvoted = vote.downvoted
     end
+
+    # build comments tree
+    @comments_tree = CommentsTreeBuilder.new(@post.comments).build
   end
 
   def upvote
@@ -40,7 +45,7 @@ class PostsController < ApplicationController
     redirect_to @post
   end
 
-  private 
+  private
   def find_vote_by_user(user_id)
     if logged_in?
       @post.votes.find_by(user_id: user_id)

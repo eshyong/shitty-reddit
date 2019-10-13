@@ -5,11 +5,10 @@ class CommentsController < ApplicationController
   def create
     post = Post.find(post_id)
     comment = post.comments.create(comment_params)
-
-    if !comment.save
+    unless comment.save
       flash[:errors] = comment.errors.full_messages
     end
-    redirect_to post_path(post)
+    redirect_to(post_path(post))
   end
 
   def upvote
@@ -36,7 +35,8 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    permitted = params.require(:comment).permit(:body)
+    permitted = params.require(:comment).permit(:body, :parent_id)
+    permitted[:parent_id] = nil if permitted[:parent_id].empty?
     permitted[:user] = session[:username]
     permitted
   end

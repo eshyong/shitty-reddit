@@ -1,3 +1,10 @@
+<script>
+  const showReplyForm = (commentId) => {
+    const form = document.getElementById(`reply-form-${commentId}`);
+    form.style.display = 'block';
+  };
+</script>
+
 <div>
   <span style="float:left; margin-right:20px">
     <%= upvote_button(@post, post_upvote_path) %>
@@ -11,15 +18,7 @@
 <br>
 <br>
 
-<%= form_with model: [ @post, Comment.new ], local: true do |form| %>
-  <p>
-    <div>leave a comment</div>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+<%= render partial: "comments/form", locals: { parent_id: "" } %>
 
 <% if !flash[:errors].nil? && !flash[:errors].empty? %>
   <div>Unable to save comment, errors:</div>
@@ -29,6 +28,6 @@
 <% end %>
 
 <h2>Comments</h2>
-<%= render(@post.comments) %>
+<%= render partial: "comments/comments_tree" %>
 
-<%= link_to 'Back', posts_path %> 
+<%= link_to 'Back', posts_path %>
