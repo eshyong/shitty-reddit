@@ -2,7 +2,7 @@
 
 <% if session[:logged_in] %>
   <div>Welcome back, <%= session[:username] %></div>
-  <div><%= link_to 'Logout', logout_path %></div> 
+  <div><%= link_to 'Logout', logout_path %></div>
   <div><%= link_to 'Submit a link', new_post_path %></div>
   <br>
 <% else %>
