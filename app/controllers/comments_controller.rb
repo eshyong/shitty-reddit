@@ -15,14 +15,14 @@ class CommentsController < ApplicationController
     post = Post.find(post_id)
     comment = post.comments.find(comment_id)
     up(comment)
-    redirect_to post
+    head :ok
   end
 
   def downvote
     post = Post.find(post_id)
     comment = post.comments.find(comment_id)
     down(comment)
-    redirect_to post
+    head :ok
   end
 
   private

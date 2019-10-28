@@ -36,13 +36,13 @@ class PostsController < ApplicationController
   def upvote
     @post = Post.find(post_id)
     up(@post)
-    redirect_to @post
+    head :ok
   end
 
   def downvote
     @post = Post.find(post_id)
     down(@post)
-    redirect_to @post
+    head :ok
   end
 
   private

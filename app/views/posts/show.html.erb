@@ -1,11 +1,15 @@
 <div>
   <span style="float:left; margin-right:20px">
-    <%= render partial: "shared/vote_buttons",
-      locals: {
-      resource: @post,
-      upvote_path: post_upvote_path,
-      downvote_path: post_downvote_path
-    } %>
+    <%= react_component(
+      "VoteButtons", {
+        upvote_path: post_upvote_path(@post),
+        downvote_path: post_downvote_path(@post),
+        upvotes: @post.upvotes,
+        downvotes: @post.downvotes,
+        is_upvoted: @post.upvoted?(session[:user_id]),
+        is_downvoted: @post.downvoted?(session[:user_id]),
+      },
+    ) %>
   </span>
   <span>
     <a href="<%= @post.url %>"><%= @post.title %></a>

@@ -1,12 +1,16 @@
 <%# root node is depth 0 but has no comments, start margin at depth = 2 %>
 <div style="margin-bottom:20px; margin-left:<%= (depth - 1) * 20 %>px">
   <span style="float:left; margin-right:20px">
-    <%= render partial: "shared/vote_buttons",
-      locals: {
-      resource: comment,
-      upvote_path: comment_upvote_path(@post, comment),
-      downvote_path: comment_downvote_path(@post, comment)
-    } %>
+    <%= react_component(
+      "VoteButtons", {
+        upvote_path: comment_upvote_path(@post, comment),
+        downvote_path: comment_downvote_path(@post, comment),
+        upvotes: comment.upvotes,
+        downvotes: comment.downvotes,
+        is_upvoted: comment.upvoted?(session[:user_id]),
+        is_downvoted: comment.downvoted?(session[:user_id]),
+      },
+    ) %>
   </span>
   <span>
     <div><%= comment.user %> says:</div>
